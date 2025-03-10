@@ -1,3 +1,8 @@
+## 1.0.4
+
+Remove a deprecated parameter from internal workings.
+
+
 ## 1.0.3
 
 Hotfix for a bug introduced in the new "uncapturing" mechanism.
