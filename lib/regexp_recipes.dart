@@ -81,15 +81,12 @@ typedef Augmenter = String Function(String expr);
 
 final class JoinedRegExpRecipe extends RegExpRecipe {
   final String joinBy;
-  // TODO: remove this (in favor of `recipe.withCapturesIgnored`)
-  final bool allowDuplicateRefs;
 
-  JoinedRegExpRecipe(List<RegExpRecipe> sources, this.joinBy, {super.tag, required this.allowDuplicateRefs}) : 
+  JoinedRegExpRecipe(List<RegExpRecipe> sources, this.joinBy, {super.tag}) : 
     super(
       sources,
       GroupTracker.combine(
         sources.map((source) => source._tracker),
-        allowDuplicateRefs: allowDuplicateRefs,
       ),
     );
 
@@ -98,12 +95,10 @@ final class JoinedRegExpRecipe extends RegExpRecipe {
     List<RegExpRecipe>? sources,
     String? joinBy,
     RegExpTag? tag,
-    bool? allowDuplicateRefs,
   }) => JoinedRegExpRecipe(
     sources ?? this.sources,
     joinBy ?? this.joinBy,
     tag: tag ?? this.tag,
-    allowDuplicateRefs: allowDuplicateRefs ?? this.allowDuplicateRefs,
   );
 
   @override
@@ -228,7 +223,7 @@ final class GroupTracker {
     },
   );
 
-  static GroupTracker combine(Iterable<GroupTracker> trackers, {bool allowDuplicateRefs = false}) {
+  static GroupTracker combine(Iterable<GroupTracker> trackers) {
     var combinedPositions = <GroupRef, int>{};
     var totalGroupCount = 0;
     var combinedPreviouslyIgnoredRefs = <GroupRef>{};
